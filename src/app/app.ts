@@ -6,10 +6,10 @@ import { TasksComponent } from "./tasks/tasks.component";
 
 @Component({
   selector: 'app-root',
-  imports: [TasksComponent],
+  standalone: false,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class AppComponent {
   protected readonly title = signal('tasks-di');
 }
