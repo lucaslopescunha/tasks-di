@@ -1,12 +1,13 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { Task, TASK_STATUS_OPTIONS, TaskStatus } from '../../task.model';
-import { TasksServiceToken } from '../../../app.module';
+import { TasksServiceToken } from '../../../../main';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  standalone: false,
   styleUrl: './task-item.component.css',
+  imports: [FormsModule]
 })
 export class TaskItemComponent {
   private service = inject(TasksServiceToken);

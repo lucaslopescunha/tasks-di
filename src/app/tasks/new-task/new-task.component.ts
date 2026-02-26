@@ -1,12 +1,13 @@
 import { Component, ElementRef, Inject, inject, output, viewChild } from '@angular/core';
 import { TasksService } from '../task.service';
-import { TasksServiceToken } from '../../app.module';
+import { TasksServiceToken } from '../../../main';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
   styleUrl: './new-task.component.css',
-  standalone: false
+  imports: [FormsModule]
 })
 export class NewTaskComponent {
   
