@@ -1,6 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, signal } from '@angular/core';
 
 import { TaskItemComponent } from './task-item/task-item.component';
+
+import { TasksServiceToken } from '../../../main';
 import { TasksService } from '../task.service';
 
 @Component({
@@ -13,7 +15,7 @@ import { TasksService } from '../task.service';
 export class TasksListComponent {
   selectedFilter = signal<string>('all');
   tasks = [];
-  tasksService = inject(TasksService);
+  private tasksService = inject(TasksServiceToken);
   results = () => {
     switch(this.selectedFilter()) {
       case 'open':
