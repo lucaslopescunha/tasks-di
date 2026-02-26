@@ -5,10 +5,12 @@ import { LoggingService } from "../logging.service";
 
 //@Injectable({ providedIn: 'root' })//root means the service can be injected anywhere in an angular application.
 export class TasksService {
-    tasks = signal<Task[]>([]);
-    allTasks = this.tasks.asReadonly();
+    tasks : Task[] = [];
     loggingService = inject(LoggingService);
 
+    get allTasks()  {
+        return [...this.tasks];
+    }
     addTask(taskData: {title: string; description: string}) {
         
         const newTask: Task = {
@@ -17,17 +19,14 @@ export class TasksService {
             status: 'OPEN'
         }
 
-        this.tasks.update((oldTasks) => [...oldTasks, newTask]);
+        this.tasks = [...this.tasks, newTask];
         this.loggingService.log(`ADDED TASK WITH TITLE ${taskData.title}`);
     }
 
     updateTasksStatus(taskId: string, newStatus: TaskStatus) {
         console.log('task id'+ taskId);
-        this.tasks.update((oldTasks) => 
-            oldTasks.map((task)=> 
-                task.id === taskId ? {...task, status: newStatus} : task
-            )
-        );
+        this.tasks = this.tasks.map((task) =>
+            task.id === taskId ? {...task, status: newStatus}: task);
         this.loggingService.log(`CHANGE TASK STATUS TO ${newStatus}`);
     }
 }
