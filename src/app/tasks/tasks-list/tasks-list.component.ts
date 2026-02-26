@@ -12,29 +12,29 @@ import { TasksServiceToken } from '../../../main';
   imports: [TaskItemComponent]
 })
 export class TasksListComponent {
-  private selectedFilter = 'all';
+  private selectedFilter = signal<string>('all');
   private tasksService = inject(TasksServiceToken);
   taskStatusOptions = inject(TASK_STATUS_OPTIONS);
-  get tasks() {
-    switch(this.selectedFilter) {
+  results = () => {
+    switch(this.selectedFilter()) {
       case 'open':
         return this.tasksService
-          .allTasks
+          .allTasks()
           .filter((task) => task.status === 'OPEN');
       case 'in-progress':
         return this.tasksService
-          .allTasks
+          .allTasks()
           .filter((task) => task.status === 'IN_PROGRESS');
       case 'done':
         return this.tasksService
-          .allTasks
+          .allTasks()
           .filter((task) => task.status === 'DONE');
       default:
         return this.tasksService
-            .allTasks;
+            .allTasks();
     }
   }
   onChangeTasksFilter(filter: string) {
-    this.selectedFilter= filter;
+    this.selectedFilter.set(filter);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, input } from '@angular/core';
+import { Component, computed, inject, Input, input, signal } from '@angular/core';
 import { Task, TASK_STATUS_OPTIONS, TaskStatus } from '../../task.model';
 import { TasksServiceToken } from '../../../../main';
 import { FormsModule } from '@angular/forms';
@@ -12,11 +12,11 @@ import { FormsModule } from '@angular/forms';
 export class TaskItemComponent {
   private service = inject(TasksServiceToken);
   taskStatusOptions = inject(TASK_STATUS_OPTIONS);
-  @Input({required: true}) task!: Task;
+  task = input.required<Task>();
 
   taskStatus = computed(() => {
 
-    switch(this.task.status) {
+    switch(this.task().status) {
       case 'OPEN':
         return 'Open';
       case 'IN_PROGRESS':
