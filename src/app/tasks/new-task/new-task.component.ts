@@ -12,14 +12,13 @@ import { TasksService } from '../task.service';
 export class NewTaskComponent {
   
   private formEl = viewChild<ElementRef<HTMLFormElement>>('form');
-  private taskService = inject(TasksService);
+  private tasksService = inject(TasksService);
   close = output<void>();
 
   onAddTask(title: string, description: string) {
-    this.taskService.addTask( {
+    this.tasksService.addTask( {
       description: description,
-      title: title,
-      status: 'OPEN'
+      title: title
     });
     this.formEl()?.nativeElement.reset();
   }

@@ -6,10 +6,3 @@ export interface Task {
     description: string;
     status: TaskStatus;
 }
-
-
-export interface NewTask {
-    title: string;
-    description: string;
-    status: TaskStatus;
-}

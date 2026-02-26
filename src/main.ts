@@ -1,6 +1,8 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
+import { TasksService } from './app/tasks/task.service';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(App, {
+  providers: [TasksService] /**Outra maneira de fazer Dependency Injection */
+}).catch((err) => console.error(err));

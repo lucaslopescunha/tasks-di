@@ -1,23 +1,28 @@
 import { Injectable, signal } from "@angular/core";
-import { NewTask, Task } from "./task.model";
+import { Task, TaskStatus } from "./task.model";
 
-@Injectable({ providedIn: 'root' })
+// you can also inject on the main.ts
+//@Injectable({ providedIn: 'root' })//root means the service can be injected anywhere in an angular application.
 export class TasksService {
-    resultsData = signal<Task[]>([]);
-
-    addTask(taskData: NewTask) {
+    tasks = signal<Task[]>([]);
+    allTasks = this.tasks.asReadonly();
+    addTask(taskData: {title: string; description: string}) {
         
-        let tasks : Task[] | undefined= this.resultsData();
-
-        tasks?.push( {
+        const newTask: Task = {
+            ...taskData,
             id: new Date().getTime()+'',
-            description: taskData.description,
-            status: 'OPEN',
-            title: taskData.title
-        });
-        console.log(tasks);
-        this.resultsData.set(tasks);
+            status: 'OPEN'
+        }
+
+        this.tasks.update((oldTasks) => [...oldTasks, newTask]);
     }
 
-
+    updateTasksStatus(taskId: string, newStatus: TaskStatus) {
+        console.log('task id'+ taskId);
+        this.tasks.update((oldTasks) => 
+            oldTasks.map((task)=> 
+                task.id === taskId ? {...task, status: newStatus} : task
+            )
+        );
+    }
 }

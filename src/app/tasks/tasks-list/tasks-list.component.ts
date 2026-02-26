@@ -14,7 +14,25 @@ export class TasksListComponent {
   selectedFilter = signal<string>('all');
   tasks = [];
   tasksService = inject(TasksService);
-  results = () => this.tasksService.resultsData();
+  results = () => {
+    switch(this.selectedFilter()) {
+      case 'open':
+        return this.tasksService
+          .allTasks()
+          .filter((task) => task.status === 'OPEN');
+      case 'in-progress':
+        return this.tasksService
+          .allTasks()
+          .filter((task) => task.status === 'IN_PROGRESS');
+      case 'done':
+        return this.tasksService
+          .allTasks()
+          .filter((task) => task.status === 'DONE');
+      default:
+        return this.tasksService
+            .allTasks();
+    }
+  };
   onChangeTasksFilter(filter: string) {
     this.selectedFilter.set(filter);
   }
